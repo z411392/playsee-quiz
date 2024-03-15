@@ -4,10 +4,10 @@ export
 .PHONY: run build up
 
 run:
-	@go run ./main/http.go
+	@go run ./cmd/http.go
 
 build:
-	@go build -o ./bin/http ./main/http.go
+	@go build -o ./bin/http ./cmd/http.go
 
 up:
 	@./bin/http

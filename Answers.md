@@ -48,7 +48,9 @@
 因為 `no other additional third party packages are allowed`，引用環境變數就不能是透過 dotenv，而是啟動時指定。這邊我是寫成 Makefile，透過 Makefile 執行。
 
 ##### package main
-go 沒有特別限定 `package main` 的檔案擺放在哪裡，社群的慣例好像都是擺在 `cli`、`cmd` 或者`專案根目錄`之類的資料夾。這裡我擺在 `main`。
+~~go 沒有特別限定 `package main` 的檔案擺放在哪裡，社群的慣例好像都是擺在 `cli`、`cmd` 或者`專案根目錄`之類的資料夾。這裡我擺在 `main`。~~
+
+按社群傳統，把相關檔案蒐集在 `cmd` 資料夾下。
 
 考慮之後還可能有其他使用情境（entrypoints），譬如 `cli.go`、`messageQueue.go`，事先規劃怎麼將它們分隔開來也是重要的事情。
 
