@@ -25,7 +25,9 @@
 如果要找出某個 User 的 Posts，就要把 userId 擺在 Row key 的前面，如果要按時間排序，那中間要放文章的發布時間，最後因為同一個時間可能會有多篇文章（雖然實際上不太可能，但理論上我們要容許這種情形），所以結尾還要放 postId。
 
 所以 RowKey 可能長這樣 `{userId}-{postReleaseTime}-{postId}`。
-如果想要找出某個使用者的文章就下 `{userId}` 開頭的查詢（可能有點像 MySQL 的 `like '{userId}-%'`）。
+~~如果想要找出某個使用者的文章就下 `{userId}` 開頭的查詢（可能有點像 MySQL 的 `like '{userId}-%'`）。~~
+
+要避免 hotspot 就要作 Partition／Sharding／Region。用來分片前綴不應該太長（以至於分片分得太細），可能到 `{userId}` 的前半部分就可以（看資料量）。
 
 ### NoSQL
 #### 問題B
@@ -39,6 +41,8 @@
 所以 RowKey 可能長這樣 `{geohash}`。
 如果想要找出鄰近目前位置的地點，可以用目前的經緯度作 GeoHash，取前面幾位，進資料庫作比對。
 實際要取幾位就看地點的密集程度了，這邊我也沒做過（🥲）。
+
+一樣，要避免 hotspot 就要作 Partition／Sharding／Region。用來分片前綴不應該太長（以至於分片分得太細），可能到 `{userId}` 的前半部分就可以（看資料量）。
 
 
 ### Coding
