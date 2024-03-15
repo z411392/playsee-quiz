@@ -7,11 +7,11 @@ import (
 	LinkedList "playsee.co/interview/utils/dataStructure/LinkedList"
 )
 
-func ReadAsLinkedList(values ...interface{}) string {
+func ReadAsLinkedList(values ...interface{}) (output string, err error) {
 	linkedList := LinkedList.FromVariadic(values...)
 	node := linkedList.Head
 	if node == nil {
-		return ""
+		return
 	}
 	builder := &strings.Builder{}
 	index := 0
@@ -29,5 +29,6 @@ func ReadAsLinkedList(values ...interface{}) string {
 		index += 1
 		builder.WriteString(fmt.Sprintf("node%d -> %v\n", index, current.Value))
 	})
-	return fmt.Sprintf("\n%s", builder.String())
+	output = fmt.Sprintf("\n%s", builder.String())
+	return
 }
