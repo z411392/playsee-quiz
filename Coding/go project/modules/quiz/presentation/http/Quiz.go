@@ -13,6 +13,7 @@ type Payload struct {
 }
 
 func Quiz(responseWriter http.ResponseWriter, request *http.Request) {
+	defer request.Body.Close()
 	payload := &Payload{}
 	err := json.NewDecoder(request.Body).Decode(&payload)
 	var data string
