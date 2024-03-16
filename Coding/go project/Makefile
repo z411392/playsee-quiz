@@ -1,7 +1,7 @@
 include .env
 export
 
-.PHONY: run build up
+.PHONY: run build up test
 
 run:
 	@go run ./cmd/http.go
@@ -11,3 +11,6 @@ build:
 
 up:
 	@./bin/http
+	
+test:
+	@go test ./modules/quiz/...
