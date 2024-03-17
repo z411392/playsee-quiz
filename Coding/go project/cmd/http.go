@@ -28,6 +28,8 @@ func accessLogMiddleware(next http.Handler) http.Handler {
 	})
 }
 
+type AuthInfoKey struct{}
+
 func authMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(responseWriter http.ResponseWriter, request *http.Request) {
 		apiKey := request.Header.Get("api-key")
@@ -36,7 +38,8 @@ func authMiddleware(next http.Handler) http.Handler {
 			http.Error(responseWriter, fmt.Sprint(err), http.StatusForbidden)
 			return
 		}
-		next.ServeHTTP(responseWriter, request)
+		currentContext := context.WithValue(request.Context(), AuthInfoKey{}, true)
+		next.ServeHTTP(responseWriter, request.WithContext(currentContext))
 	})
 }
 
