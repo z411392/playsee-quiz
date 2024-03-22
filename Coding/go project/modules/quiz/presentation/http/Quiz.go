@@ -1,11 +1,11 @@
 package http
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 
 	queries "playsee.co/interview/modules/quiz/application/queries"
+	parse "playsee.co/interview/utils/parse"
 )
 
 type Payload struct {
@@ -14,8 +14,7 @@ type Payload struct {
 
 func Quiz(responseWriter http.ResponseWriter, request *http.Request) {
 	defer request.Body.Close()
-	payload := &Payload{}
-	err := json.NewDecoder(request.Body).Decode(&payload)
+	err, payload := parse.AsJson[Payload](request)
 	var data string
 	if err == nil {
 		data, err = queries.ReadAsLinkedList(payload.Array...)
